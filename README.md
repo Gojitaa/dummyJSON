@@ -1,4 +1,4 @@
-##Language
+## Language
 - Dummyjson -> Object
 - Object -> LeftBrace Members RightBrace
 - Members -> Member
@@ -25,7 +25,7 @@
 - Onenine -> <1-9>
 - Char -> <Aa-Zz,0-9...any>
 
-##First
+## First
 - First(Onenine): { <1-9> }
 - First(Char): { <Aa-Zz, 0-9...any> }
 - First(Chars): First(Char)
@@ -38,7 +38,8 @@
 - First(Member): First(Str)
 - First(Members): First(Str)
 - First(Dummyjson): First(Object)
-##Follow
+
+## Follow
 - Follow(Onenine): { <1-9>, }, ',' }
 - Follow(Char): { <Aa-Zz, 0-9...any>, " }
 - Follow(Chars): { " }
