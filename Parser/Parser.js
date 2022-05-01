@@ -1,5 +1,7 @@
-import tokenizer, { isWhitespace } from './Lexer.js'
-import CodeGen from './CodeGenerator.js'
+//import tokenizer, { isWhitespace } from './Lexer.js'
+const tokenizer = require('./Lexer.js').default
+const isWhitespace = require('./Lexer.js').isWhitespace
+const CodeGen = require('./CodeGenerator.js')
 
 class Parser {
 	parse(str) {
@@ -11,6 +13,18 @@ class Parser {
 		return object
 	}
 
+	skipWhitespace() {
+		// TODO: refactor, skip whitespace
+		const lookahead = this.lookahead().type
+		if(isWhitespace(lookahead)) {
+			this.cursor += 1
+
+			return true
+		}
+
+		return false
+	}
+
 	lookahead() {
 		return this.tokenizer(this.cursor)
 	}
@@ -18,7 +32,6 @@ class Parser {
 	match(type) {
 		const token = this.lookahead()
 		this.cursor += 1
-		console.log(token)
 		if(type !== 'any' && isWhitespace(token.type))  {
 			return this.match(type)
 		}
@@ -65,6 +78,11 @@ class Parser {
 			//empty object return nothing
 			return {};
 		}
+
+		if(this.skipWhitespace()) {
+			return this.Members(members);
+		}
+
 		return this.Member(members)
 	}
 
@@ -87,11 +105,10 @@ class Parser {
 
 	Element() {
 		const lookahead = this.lookahead().type
-		// TODO: refactor, skip whitespace between Elements
-		if(isWhitespace(lookahead)) {
-			this.cursor += 1
-			return this.Element()
+		if(this.skipWhitespace()) {
+			return this.Element();
 		}
+
 		switch (lookahead) {
 			case 'LeftBrace':
 				return this.Object()
@@ -190,4 +207,4 @@ class Parser {
 	}
 }
 
-export default Parser
+module.exports = Parser

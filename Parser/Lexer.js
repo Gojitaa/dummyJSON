@@ -11,7 +11,7 @@ const Spec = Object.freeze({
 	',': { type: 'Comma' },
 })
 
-export function isWhitespace(char){
+function isWhitespace(char){
 	return whitespace.includes(char) 
 }
 
@@ -43,4 +43,5 @@ function tokenizer(str) {
 	}
 }
 
-export default tokenizer
+exports.isWhitespace = isWhitespace
+exports.default = tokenizer

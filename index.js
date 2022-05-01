@@ -1,4 +1,4 @@
-import Parser from './Parser/Parser.js'
+const Parser = require('./Parser/Parser.js')
 
 const parser = new Parser()
 

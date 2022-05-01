@@ -35,4 +35,4 @@ class CodeGen {
 	}
 }
 
-export default CodeGen
+module.exports = CodeGen
